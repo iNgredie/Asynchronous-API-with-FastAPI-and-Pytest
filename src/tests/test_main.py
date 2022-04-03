@@ -11,3 +11,13 @@ def test_notes(test_app):
         {'note_1': 'first_note'},
         {'note_2': 'second_note'},
     ]
+
+
+def test_note(test_app):
+    notes = [
+        {'note_1': 'first_note'},
+        {'note_2': 'second_note'},
+    ]
+    response = test_app.get(f'/note/{1}')
+    assert response.status_code == 200
+    assert response.json() == notes[1]
