@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response, status
 
 app = FastAPI()
 
@@ -18,6 +18,23 @@ async def get_notes():
     return notes
 
 
-@app.get('/note/{id}')
+@app.get('/note/{note_id}')
 async def get_note(note_id: int):
     return notes[note_id]
+
+
+@app.post('/notes')
+async def create_notes(notes_data: dict):
+    return notes_data
+
+
+@app.put('/note/{note_id}')
+async def update_note(note_id: int, notes_data: dict):
+    notes[note_id] = notes_data
+    return notes[note_id]
+
+
+@app.delete('/note/{note_id}')
+async def delete_note(note_id: int):
+    notes.pop(note_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
